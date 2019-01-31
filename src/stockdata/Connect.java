@@ -1,11 +1,13 @@
 package stockdata;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 /**
  *
@@ -45,6 +47,20 @@ public class Connect {
         }
         datafor = gson.fromJson(data, Company.class);
         return datafor;
+    }
+    
+    public static ArrayList<StockPrices> getStockPrices(Company name){     
+        String data = "";
+        ArrayList<StockPrices> returnData = new ArrayList<>();
+        try {
+            URL companyURL = new URL("https://api.iextrading.com/1.0/stock/" + name.getSymbol() + "/chart/1m");
+            data = getData(companyURL);
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+        returnData = gson.fromJson(data, new TypeToken<ArrayList<StockPrices>>(){}.getType());
+        
+        return returnData;
     }
 
 }
