@@ -2,6 +2,8 @@
 package stockdata;
 
 import java.util.Date;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -129,6 +131,17 @@ public class StockPrices {
 
     public void setChangeOverTime(float changeOverTime) {
         this.changeOverTime = changeOverTime;
+    }
+    
+    public ObservableList getListView(){
+        String a = "Open: " + open;
+        String b = "High: " + high;
+        String c = "Close: " + close;
+        String d = "Change: " + changePercent + "%";
+        ObservableList list = FXCollections.observableArrayList();
+        list.addAll(a, b, c, d);
+        
+        return  list;
     }
     
     

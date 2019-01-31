@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,8 +37,8 @@ public class Connect {
         return data;
     }
 
-    public static Company getCompanyData(String Symbol) {
-        Company datafor = new Company();
+    public Company getCompanyData(String Symbol) {
+        Company datafor;
         String data = "";
         try {
             URL companyURL = new URL("https://api.iextrading.com/1.0/stock/" + Symbol + "/company");
@@ -49,7 +50,7 @@ public class Connect {
         return datafor;
     }
     
-    public static ArrayList<StockPrices> getStockPrices(Company name){     
+    public Stock getStockPrices(Company name){     
         String data = "";
         ArrayList<StockPrices> returnData = new ArrayList<>();
         try {
@@ -60,7 +61,7 @@ public class Connect {
         }
         returnData = gson.fromJson(data, new TypeToken<ArrayList<StockPrices>>(){}.getType());
         
-        return returnData;
+        return new Stock(returnData);
     }
 
 }

@@ -48,11 +48,11 @@ public class Company {
         this.symbol = symbol;
     }
 
-    public String getcompanyName() {
+    public String getCompanyName() {
         return companyName;
     }
 
-    public void setcompanyName(String Name) {
+    public void setCompanyName(String Name) {
         this.companyName = Name;
     }
 
