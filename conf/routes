@@ -6,10 +6,12 @@
 GET     /                           controllers.HomeController.index
 
 #Users Fucntionality
+GET		/user						controllers.UserController.display
 GET		/user/all					controllers.UserController.getAll
 GET		/user/:id					controllers.UserController.getUser(id : Long)
-POST	/user						controllers.UserController.addUser
+POST	/user						controllers.UserController.addUser(request : Request)
 PUT		/user						controllers.UserController.updateUser
+DELETE	/user/:id					controllers.UserController.deleteUser(id : Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
