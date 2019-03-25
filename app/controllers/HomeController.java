@@ -19,7 +19,7 @@ public class HomeController extends Controller {
 		//Checks if the user is logged in by populating the session users ID
 		try{
 			sessionUserID = Long.parseLong(request.session().getOptional("userID").get());
-			return ok(index.render("Welcome"));
+			return ok(index.render("411 Stocks"));
 		}catch(Exception e){
 			//This error means the user is not currently logged in
 			//routes the user to login page

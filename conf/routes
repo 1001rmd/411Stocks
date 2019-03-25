@@ -14,6 +14,7 @@ GET		/logout						controllers.LoginController.logout
 #Users Fucntionality
 GET		/user						controllers.UserController.display
 GET		/user/all					controllers.UserController.getAll
+GET		/user/manage				controllers.UserController.manage
 GET		/user/:id					controllers.UserController.getUser(id : Long)
 POST	/user						controllers.UserController.addUser(request : Request)
 PUT		/user						controllers.UserController.updateUser

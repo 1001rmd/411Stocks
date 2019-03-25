@@ -66,6 +66,12 @@ public class UserController extends Controller{
 		return redirect(routes.LoginController.display(false));
 		
 	}
+	
+	//This function shows the user management page
+	public Result manage(){
+		
+		return ok("Manage");
+	}
 
 	//This function updates user information
 	public Result updateUser(){
