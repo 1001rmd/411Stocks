@@ -1,0 +1,24 @@
+@import play.mvc.Http.Request
+@import helper._
+@import controllers._
+@import play.data.Form
+
+@(form: Form[UserLoginRequest], error: Boolean)
+
+
+<h1> Login </h1> <br>
+
+@if(error){
+	<font color='red'>Your login credentials are incorrect <br>
+	Try again <br></font>
+}
+
+@helper.form(action = helper.CSRF(routes.LoginController.login)){
+		@helper.CSRF.formField
+		@helper.inputText(form("email"))
+		@helper.inputText(form("password"))
+		
+		<button type="submit">Login</button>
+}
+
+<br><a href="@routes.UserController.display">Or Click here to create a new user</a>
