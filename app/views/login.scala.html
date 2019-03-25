@@ -3,20 +3,22 @@
 @import controllers._
 @import play.data.Form
 
-@(form: Form[User])
+@(form: Form[UserLoginRequest], error: Boolean)
 
 
-<h1> Welcome to the Users Page </h1>
-<br> Fill out the form below to add a new user <br>
+<h1> Login </h1> <br>
+
+@if(error){
+	<font color='red'>Your login credentials are incorrect <br>
+	Try again <br></font>
+}
 
 @helper.form(action = helper.CSRF(routes.UserController.addUser)){
 		@helper.CSRF.formField
-		@helper.inputText(form("name"))
 		@helper.inputText(form("email"))
 		@helper.inputText(form("password"))
 		
 		<button type="submit">Create New User</button>
 }
-	
-	
 
+<br><a href="@routes.UserController.display">Or Click here to create a new user</a>

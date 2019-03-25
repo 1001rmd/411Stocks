@@ -11,6 +11,7 @@ import play.*;
 import play.data.Form;
 import play.data.FormFactory;
 import io.ebean.Finder;
+import io.ebean.Ebean;
 import javax.inject.Inject;
 
 
@@ -50,7 +51,8 @@ public class UserController extends Controller{
 		
 		User user = form.bindFromRequest(request).get();
 		user.save();		
-		return ok("Success");
+		return redirect(routes.UserController.getUser(user.id));
+		
 	}
 
 	//This function updates user information
@@ -61,6 +63,8 @@ public class UserController extends Controller{
 	//This function deletes a user
 	public Result deleteUser(long id){
 		
+		User user = finder.byId(id);
+		Ebean.delete(user);
 		return ok();
 	}
 
