@@ -3,12 +3,15 @@ package controllers;
 import models.*;
 import views.html.*;
 
+import play.*;
 import play.mvc.*;
+import play.mvc.Http.Session;
 import play.mvc.Http.Request;
 import io.ebean.Finder;
 import play.data.Form;
 import play.data.FormFactory;
 import javax.inject.Inject;
+import java.util.Map;
 
 public class LoginController extends Controller{
 
@@ -38,6 +41,32 @@ public class LoginController extends Controller{
 	* with an error message */
 	public Result login(Request request){
 		
-		return ok("Sucess");
+		UserLoginRequest login = form.bindFromRequest(request).get();
+		User user = null;
+		
+		//Attempts to finds user in database
+		try{
+			user = finder.query().where().ilike("email", login.email).findList().get(0);
+		}catch(Exception e){
+			//This means the user does not exist in the database
+			return redirect(routes.LoginController.display(true));
+		}
+		
+		//compares passwords
+		if(user.password.equals(login.password)){
+			
+			//adds user to session
+			return redirect(routes.HomeController.index()).addingToSession(request, "userID", Long.toString(user.id));
+		}
+		
+		
+		return redirect(routes.LoginController.display(true));
+		
 	}
+	
+	//This function logs the user out
+	public Result logout(){
+		return redirect(routes.LoginController.display(false)).withNewSession();
+	}
+	
 }

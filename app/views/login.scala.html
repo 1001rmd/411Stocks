@@ -13,12 +13,12 @@
 	Try again <br></font>
 }
 
-@helper.form(action = helper.CSRF(routes.UserController.addUser)){
+@helper.form(action = helper.CSRF(routes.LoginController.login)){
 		@helper.CSRF.formField
 		@helper.inputText(form("email"))
 		@helper.inputText(form("password"))
 		
-		<button type="submit">Create New User</button>
+		<button type="submit">Login</button>
 }
 
 <br><a href="@routes.UserController.display">Or Click here to create a new user</a>

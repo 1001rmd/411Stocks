@@ -3,12 +3,12 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
+GET     /                           controllers.HomeController.index(request: Request)
 
 #Login Fucntionality
-GET		/login				controllers.LoginController.display(error : Boolean ?= false)
+GET		/login						controllers.LoginController.display(error : Boolean ?= false)
 POST	/login						controllers.LoginController.login(request : Request)
-
+GET		/logout						controllers.LoginController.logout		
 
 
 #Users Fucntionality

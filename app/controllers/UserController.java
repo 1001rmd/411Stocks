@@ -46,12 +46,24 @@ public class UserController extends Controller{
 		
 	}
 	
-	//This funtion creates a new user
+	//This funtion creates a new user.
 	public Result addUser(Request request){
 		
 		User user = form.bindFromRequest(request).get();
-		user.save();		
-		return redirect(routes.UserController.getUser(user.id));
+		
+		//Ensures no duplicate emails
+		try{
+			User checkEmail = finder.query().where().ilike("email", user.email).findList().get(0);
+			if(checkEmail != null){
+				return status(440, "There is already an account with that email address");
+			}
+		}catch(Exception e){
+			//Do Nothing
+			//This Exception means there are no other users with the same email
+		}
+		
+		user.save();
+		return redirect(routes.LoginController.display(false));
 		
 	}
 

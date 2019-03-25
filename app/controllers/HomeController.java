@@ -1,6 +1,7 @@
 package controllers;
 
 import play.mvc.*;
+import play.mvc.Http.Request;
 
 import views.html.*;
 
@@ -10,9 +11,23 @@ import views.html.*;
  */
 public class HomeController extends Controller {
 
-    
-    public Result index() {
-        return ok(index.render("Your new application is ready."));
+    private long sessionUserID;
+	
+	
+    public Result index(Request request) {
+        
+		//Checks if the user is logged in by populating the session users ID
+		try{
+			sessionUserID = Long.parseLong(request.session().getOptional("userID").get());
+			return ok(index.render("Welcome"));
+		}catch(Exception e){
+			//This error means the user is not currently logged in
+			//routes the user to login page
+			return redirect(routes.LoginController.display(false));
+		}
+		
+		
+		
     }
 
 }
