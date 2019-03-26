@@ -105,7 +105,6 @@ public class UserController extends Controller{
 			//Deletes User
 			User user = finder.byId(sessionUserID);
 			Ebean.delete(user);
-			return ok();
 			
 		}catch(Exception e){			
 		}
