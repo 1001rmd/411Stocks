@@ -6,13 +6,13 @@
 GET     /                           controllers.HomeController.index(request: Request)
 
 #Login Fucntionality
-GET		/login						controllers.LoginController.display(error : Boolean ?= false)
+GET		/login						controllers.LoginController.display(error : Boolean ?= false, request: Request)
 POST	/login						controllers.LoginController.login(request : Request)
 GET		/logout						controllers.LoginController.logout		
 
 
 #Users Fucntionality
-GET		/user						controllers.UserController.display
+GET		/user						controllers.UserController.display(request : Request)
 GET		/user/all					controllers.UserController.getAll
 GET		/user/manage				controllers.UserController.manage
 GET		/user/:id					controllers.UserController.getUser(id : Long)

@@ -10,18 +10,21 @@ import play.mvc.Http.Request;
 import io.ebean.Finder;
 import play.data.Form;
 import play.data.FormFactory;
+import play.i18n.MessagesApi;
 import javax.inject.Inject;
 import java.util.Map;
 
 public class LoginController extends Controller{
 
 	private Form<UserLoginRequest>form;
+	private MessagesApi messagesApi;
 	private Finder<Long, User> finder = new Finder<>(User.class);
 
 	//Creates the controller and injects a FormFactory
 	@Inject
-	public LoginController(FormFactory ff){
+	public LoginController(FormFactory ff, MessagesApi ma){
 		this.form = ff.form(UserLoginRequest.class);
+		messagesApi = ma;
 	}
 	
 	
@@ -30,8 +33,8 @@ public class LoginController extends Controller{
 	* If a previous login attempt fails the boolean parameter is passed as true.
 	* This displays an error message on the login page.
 	* By default the parameter is set to false displaying no message   */
-	public Result display(boolean error){	
-		return ok(login.render(form, error));
+	public Result display(boolean error, Request request){	
+		return ok(login.render(form, error, request, messagesApi.preferred(request)));
 	}
 	
 	

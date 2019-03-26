@@ -3,7 +3,7 @@
 @import controllers._
 @import play.data.Form
 
-@(form: Form[UserLoginRequest], error: Boolean)
+@(form: Form[UserLoginRequest], error: Boolean)(implicit request: Request, messages: play.i18n.Messages)
 
 
 <h1> Login </h1> <br>

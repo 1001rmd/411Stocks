@@ -10,25 +10,30 @@ import play.mvc.Http.Request;
 import play.*;
 import play.data.Form;
 import play.data.FormFactory;
+import play.i18n.MessagesApi;
 import io.ebean.Finder;
 import io.ebean.Ebean;
 import javax.inject.Inject;
+import play.i18n.MessagesApi;
 
 
 public class UserController extends Controller{
 
 	private Form<User>form;
+	private MessagesApi messagesApi;
 	private Finder<Long, User> finder = new Finder<>(User.class);
+	
 
-	//Creates the controller and injects a FormFactory
+	//Creates the controller and injects a FormFactory and Messages API to create a scala web form
 	@Inject
-	public UserController(FormFactory ff){
+	public UserController(FormFactory ff, MessagesApi ma){
 		this.form = ff.form(User.class);
+		this.messagesApi = ma;
 	}
 	
 	//This function displays the user page
-	public Result display(){
-		return ok(user.render(form));
+	public Result display(Request request){
+		return ok(user.render(form, request, messagesApi.preferred(request)));
 	}
 
 	//This function returtns a JSon list of all users

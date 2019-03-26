@@ -3,7 +3,7 @@
 @import controllers._
 @import play.data.Form
 
-@(form: Form[User])
+@(form: Form[User])(implicit request: Request, messages: play.i18n.Messages)
 
 
 <h1> Welcome to the Users Page </h1>
