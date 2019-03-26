@@ -1,4 +1,4 @@
-name := """play-java-starter-example"""
+name := """411Stocks"""
 
 version := "1.0-SNAPSHOT"
 

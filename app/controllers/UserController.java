@@ -10,6 +10,7 @@ import play.mvc.Http.Request;
 import play.*;
 import play.data.Form;
 import play.data.FormFactory;
+import play.i18n.MessagesApi;
 import io.ebean.Finder;
 import io.ebean.Ebean;
 import javax.inject.Inject;
