@@ -20,7 +20,15 @@ Project BackLog:
 	View the portfolio contents/summary
 
 	
+Added Tasks that we didn't include
+
+	Login and Logout: Completed
+	
+	Deploy to Heroku: Completed
+	
 Currently the app has basic user functionality. Users can create accounts and use their account to log in to the system. 
+Users can also delete their accounts.
+
 
 You can create your own test account or use ours:
    Email = "test"

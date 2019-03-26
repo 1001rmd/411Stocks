@@ -1,0 +1,28 @@
+@import play.mvc.Http.Request
+@import helper._
+@import controllers._
+@import play.data.Form
+
+@(form: Form[User])(implicit request: Request, messages: play.i18n.Messages)
+
+
+<h1> Use the form below to update your information </h1>
+<br><br>
+
+@helper.form(action = helper.CSRF(routes.UserController.updateUser)){
+		@helper.CSRF.formField
+		@helper.inputText(form("name"))
+		@helper.inputText(form("email"))
+		@helper.inputText(form("password"))
+		
+		<button type="submit">Update User</button>
+}
+
+<br><br><br>
+
+		<p>Be careful, you can't undo this</p>
+		<h4><a href="@routes.UserController.deleteUser"> Delete Your Account </a></h4>
+
+	
+	
+

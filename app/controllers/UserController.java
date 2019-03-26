@@ -19,21 +19,24 @@ import play.i18n.MessagesApi;
 
 public class UserController extends Controller{
 
-	private Form<User>form;
+	private FormFactory ff;
+	private Form<User> userForm;
 	private MessagesApi messagesApi;
 	private Finder<Long, User> finder = new Finder<>(User.class);
+	long sessionUserID = 0;
 	
 
 	//Creates the controller and injects a FormFactory and Messages API to create a scala web form
 	@Inject
 	public UserController(FormFactory ff, MessagesApi ma){
-		this.form = ff.form(User.class);
+		this.ff = ff;
+		userForm = ff.form(User.class);
 		this.messagesApi = ma;
 	}
 	
 	//This function displays the user page
 	public Result display(Request request){
-		return ok(user.render(form, request, messagesApi.preferred(request)));
+		return ok(user.render(userForm, request, messagesApi.preferred(request)));
 	}
 
 	//This function returtns a JSon list of all users
@@ -54,7 +57,7 @@ public class UserController extends Controller{
 	//This funtion creates a new user.
 	public Result addUser(Request request){
 		
-		User user = form.bindFromRequest(request).get();
+		User user = userForm.bindFromRequest(request).get();
 		
 		//Ensures no duplicate emails
 		try{
@@ -73,22 +76,42 @@ public class UserController extends Controller{
 	}
 	
 	//This function shows the user management page
-	public Result manage(){
+	public Result manage(Request request){
 		
-		return ok("Manage");
+		//Ensures user is logged in
+		try{
+			sessionUserID = Long.parseLong(request.session().getOptional("userID").get());
+			return ok(manageUser.render(ff.form(User.class), request, messagesApi.preferred(request)));
+		}catch(Exception e){
+			//This error means the user is not currently logged in
+			//routes the user to login page
+			return redirect(routes.LoginController.display(false));
+		}
+		
 	}
 
 	//This function updates user information
 	public Result updateUser(){
-		return ok("Success");
+		return ok("TODO add update user function");
 	}
 	
 	//This function deletes a user
-	public Result deleteUser(long id){
+	public Result deleteUser(Request request){
 		
-		User user = finder.byId(id);
-		Ebean.delete(user);
-		return ok();
+		//Ensures user is logged in
+		try{
+			sessionUserID = Long.parseLong(request.session().getOptional("userID").get());
+			
+			//Deletes User
+			User user = finder.byId(sessionUserID);
+			Ebean.delete(user);
+			return ok();
+			
+		}catch(Exception e){			
+		}
+		
+		return redirect(routes.LoginController.display(false));
+		
 	}
 
 
