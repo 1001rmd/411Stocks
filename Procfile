@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/411 -Dhttp.port=${PORT} -DapplyEvolutions.default=true
+web: target/universal/stage/bin/411stocks -Dhttp.port=${PORT} -DapplyEvolutions.default=true
