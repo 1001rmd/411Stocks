@@ -10,6 +10,9 @@ GET		/login						controllers.LoginController.display(error : Boolean ?= false, r
 POST	/login						controllers.LoginController.login(request : Request)
 GET		/logout						controllers.LoginController.logout		
 
+#Stock Functionality
+GET     /stock                      controllers.StockController.listStocks(request: Request)
+POST    /stock                      controllers.StockController.addStock(request: Request)
 
 #Users Fucntionality
 GET		/user						controllers.UserController.display(request : Request)
