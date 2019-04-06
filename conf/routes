@@ -19,7 +19,7 @@ GET		/user						controllers.UserController.display(request : Request)
 GET		/user/all					controllers.UserController.getAll
 GET		/user/manage				controllers.UserController.manage(request : Request)
 GET		/user/delete				controllers.UserController.deleteUser(request : Request)
-POST	/user/update				controllers.UserController.updateUser
+POST    /user/update				controllers.UserController.updateUser(request: Request)
 GET		/user/:id					controllers.UserController.getUser(id : Long)
 POST	/user						controllers.UserController.addUser(request : Request)
 

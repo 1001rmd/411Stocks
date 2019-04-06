@@ -1,5 +1,5 @@
 @import play.mvc.Http.Request
-@(widgets: Seq[Stock], form: Form[Stock])(implicit request: Request, messages: play.i18n.Messages)
+@(stocks: Seq[Stock], form: Form[Stock])(implicit request: Request, messages: play.i18n.Messages)
 
 @main("Stock") {
 
@@ -35,9 +35,9 @@
             <tr><th><h3>Name</h3></th><th><h3>Symbol</h3></th>
         </thead>
         <tbody>
-        @for(w <- widgets) {
-            <tr><td>@w.name</td>
-                <td>@w.symbol</td></tr>
+        @for(s <- stocks) {
+            <tr><td>@s.name</td>
+                <td>@s.symbol</td></tr>
         }
         </tbody>
     </table>

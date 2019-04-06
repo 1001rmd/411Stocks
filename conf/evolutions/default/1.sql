@@ -3,6 +3,11 @@
 
 # --- !Ups
 
+create table stock (
+  symbol                        varchar(255),
+  name                          varchar(255)
+);
+
 create table user (
   id                            bigint auto_increment not null,
   name                          varchar(255),
@@ -13,6 +18,8 @@ create table user (
 
 
 # --- !Downs
+
+drop table if exists stock;
 
 drop table if exists user;
 
