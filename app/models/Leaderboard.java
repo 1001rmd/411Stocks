@@ -22,7 +22,7 @@ public class Leaderboard extends Model{
 	
 	public String name;
 	
-	@OneToMany @JsonBackReference
+	@OneToMany(cascade=CascadeType.ALL) @JsonBackReference
 	public List<Portfolio> portfolios;
 	
 	@ManyToOne

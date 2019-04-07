@@ -11,8 +11,10 @@
         </thead>
         <tbody>
         @for(p <- board.getPortfolios()) {
-            <tr><td>@p.user.name</td>
-                <td>@p.getValue()</td></tr>
+            <tr>
+				<td>@p.user.name</td>
+                <td>@p.getValue()</td>
+			</tr>
         }
         </tbody>
     </table>

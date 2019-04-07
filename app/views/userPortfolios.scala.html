@@ -1,5 +1,3 @@
-@import play.mvc.Http.Request
-
 @(user : User)
 
 	<a href="@routes.HomeController.index"> Home </a><br>
@@ -11,7 +9,7 @@
         <tbody>
         @for(p <- user.getPortfolios()) {
             <td>
-				<a href="@routes.BoardController.displayBoard(p.leaderboard.id)">@p.leaderboard.name </a>
+				<a href="@routes.PortfolioController.displayPortfolio(p.id)">@p.leaderboard.name </a>
 			</td>
                 <td>@p.getValue()</td></tr>
         }

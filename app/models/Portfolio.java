@@ -1,6 +1,7 @@
 package models;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ArrayList;
 
 import io.ebean.Model;
@@ -24,13 +25,13 @@ public class Portfolio extends Model{
 	@ManyToOne @JsonManagedReference
 	public Leaderboard leaderboard;
 	
-	public ArrayList<Stock> stocks;
+	public List<Stock> stocks;
 	
 	public LinkedList<String> history;
 	
 	public double value;
 	
-	double account;
+	public double account;
 
 	public Portfolio(User user, Leaderboard board){
 		
@@ -50,6 +51,16 @@ public class Portfolio extends Model{
 		*/
 		value = account; //+ value of stocks
 		return value;
+	}
+	
+	public List<Stock> getStock(){
+		
+		//TODO get stocks from database
+		if(stocks == null){
+			stocks = new ArrayList<Stock>();
+		}
+		
+		return stocks;
 	}
 
 

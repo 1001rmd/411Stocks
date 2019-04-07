@@ -129,10 +129,13 @@ public class UserController extends Controller{
 			//Deletes User
 			User user = finder.byId(sessionUserID);
 			Ebean.delete(user);
+			return redirect(routes.LoginController.display(false));
 			
-		}catch(Exception e){} 
+		}catch(Exception e){
+			return ok();
+		} 
 		
-		return redirect(routes.LoginController.display(false));
+		//return ok();
 		
 	}
 

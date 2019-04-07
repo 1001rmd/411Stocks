@@ -1,0 +1,22 @@
+@(port : Portfolio)
+
+	<a href="@routes.HomeController.index"> Home </a><br>
+	<a href="@routes.PortfolioController.display"> Back </a><br>
+	
+	<br>Total Value: $@port.getValue
+	<br>Account Balance: $@port.account<br>
+	<table>
+        <caption><h2>@port.leaderboard.name</h2></caption>
+        <thead>
+            <tr><th><h3>Stock</h3></th><th><h3>Shares</h3></th><th><h3>Value</h3></th>
+        </thead>
+        <tbody>
+        @*for(s <- port.getStock()) {
+            <tr>
+				<td> TODO get stock name</td>
+				<td>TODO get stock quantity</td>
+				<td>TODO get stock value</td>
+			</tr>
+        }*@
+        </tbody>
+    </table>

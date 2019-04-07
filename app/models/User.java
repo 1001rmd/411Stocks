@@ -20,7 +20,7 @@ public class User extends Model{
 	@Id @GeneratedValue
 	public long id;
 	
-	@OneToMany @JsonBackReference
+	@OneToMany(cascade=CascadeType.ALL) @JsonBackReference
 	List<Portfolio> portfolios;
 	
 	public String name;

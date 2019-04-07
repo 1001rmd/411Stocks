@@ -13,7 +13,7 @@
 		@helper.CSRF.formField
 		@helper.inputText(form("name"))
 		@helper.inputText(form("email"))
-		@helper.inputText(form("password"))
+		@helper.inputPassword(form("password"))
 		
 		<button type="submit">Create New User</button>
 }
