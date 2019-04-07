@@ -27,7 +27,7 @@ POST	/user						controllers.UserController.addUser(request : Request)
 GET		/leaderboard				controllers.BoardController.display(request : Request)
 POST	/leaderboard				controllers.BoardController.addBoard(request : Request)
 GET		/leaderboard/all			controllers.BoardController.getBoards()
-GET		/leaderboard/:id			controllers.BoardController.displayBoard(id : Long)
+GET		/leaderboard/:id			controllers.BoardController.displayBoard(id : Long, request: Request)
 POST	/leaderboard/:id			controllers.BoardController.joinBoard(id: Long, request : Request)
 
 

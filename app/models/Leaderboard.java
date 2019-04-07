@@ -28,11 +28,12 @@ public class Leaderboard extends Model{
 	public double startingAccount;
 	
 	
-	public Leaderboard(String name, double startingAccount){
+	public Leaderboard(String name, double startingAccount, User user){
 		
 		this.name = name;
 		this.startingAccount = startingAccount;
 		portfolios = new ArrayList<Portfolio>();
+		owner = user;
 		
 	}
 

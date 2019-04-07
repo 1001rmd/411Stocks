@@ -41,6 +41,13 @@ public class Portfolio extends Model{
 		history = new LinkedList<String>();
 		
 	}
+	
+	public void updateValue(){
+		/*TODO 
+		* This method will query the api to find the current value
+		* of the portfolio and update the value variable
+		*/
+	}
 
 
 } 
