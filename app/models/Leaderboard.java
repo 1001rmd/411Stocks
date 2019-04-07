@@ -1,12 +1,15 @@
 package models;
 
 import io.ebean.Model;
+import io.ebean.Finder;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ public class Leaderboard extends Model{
 	
 	public String name;
 	
-	@OneToMany
+	@OneToMany @JsonBackReference
 	public List<Portfolio> portfolios;
 	
 	@ManyToOne
@@ -35,6 +38,16 @@ public class Leaderboard extends Model{
 		portfolios = new ArrayList<Portfolio>();
 		owner = user;
 		
+	}
+	
+	public List<Portfolio> getPortfolios(){
+		
+		if(portfolios == null){
+			//portfolios = new Finder<>(Portfolio.class).query().where().eq("leaderboard", id).findList();
+			portfolios = new Finder<>(Portfolio.class).all();
+		}
+		
+		return portfolios;
 	}
 
 }

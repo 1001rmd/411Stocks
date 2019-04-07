@@ -5,7 +5,7 @@
 
 @(boards : Seq[Leaderboard], form: Form[BoardRequest])(implicit request: Request, messages: play.i18n.Messages)
 
-
+<a href="@routes.HomeController.index"> Home </a>
 <h1> Join a Leaderboard to get started </h1>
 
 	<table>
@@ -15,8 +15,12 @@
         </thead>
         <tbody>
         @for(b <- boards) {
-            <tr><td>@b.name</td>
-                <td>@b.portfolios.size</td></tr>
+            <tr>
+				<td>
+					<a href="@routes.BoardController.displayBoard(b.id)">@b.name </a>
+				</td>
+                <td>@b.portfolios.size</td>
+			</tr>
         }
         </tbody>
     </table>

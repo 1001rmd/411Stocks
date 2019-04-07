@@ -30,6 +30,9 @@ GET		/leaderboard/all			controllers.BoardController.getBoards()
 GET		/leaderboard/:id			controllers.BoardController.displayBoard(id : Long, request: Request)
 POST	/leaderboard/:id			controllers.BoardController.joinBoard(id: Long, request : Request)
 
+#Portfolio Functionality
+GET		/portfolio/user				controllers.PortfolioController.display(request : Request)
+GET		/portfolio/:id				controllers.PortfolioController.displayPortfolio(id : Long, request : Request)
 
 
 # Map static resources from the /public folder to the /assets URL path

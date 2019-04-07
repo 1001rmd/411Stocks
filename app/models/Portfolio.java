@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Portfolio extends Model{
@@ -17,10 +18,10 @@ public class Portfolio extends Model{
 	@Id @GeneratedValue
 	public long id;
 	
-	@ManyToOne
+	@ManyToOne @JsonManagedReference
 	public User user;
 	
-	@ManyToOne
+	@ManyToOne @JsonManagedReference
 	public Leaderboard leaderboard;
 	
 	public ArrayList<Stock> stocks;
@@ -42,11 +43,13 @@ public class Portfolio extends Model{
 		
 	}
 	
-	public void updateValue(){
+	public double getValue(){
 		/*TODO 
 		* This method will query the api to find the current value
 		* of the portfolio and update the value variable
 		*/
+		value = account; //+ value of stocks
+		return value;
 	}
 
 
