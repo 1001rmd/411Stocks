@@ -1,0 +1,26 @@
+@import play.mvc.Http.Request
+@import helper._
+@import controllers._
+@import play.data.Form
+
+@(form: Form[Leaderboard])(implicit request: Request, messages: play.i18n.Messages)
+
+<script type='text/javascript' src='@routes.Assets.versioned("leaderboard.js")'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<h1> Join a Leaderboard to get started </h1>
+
+<ul id="boards"></ul>
+
+
+
+@helper.form(action = helper.CSRF(routes.BoardController.addBoard)){
+		@helper.CSRF.formField
+		@helper.inputText(form("Name"))
+		@helper.inputText(form("Starting Account Balance"))
+		
+		<button type="submit">Create New Leaderboard</button>
+}
+	
+
+

@@ -9,3 +9,6 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-play-enhancer" % "1.2.2")
 
 //Ebean Plugin
 addSbtPlugin("com.typesafe.sbt" % "sbt-play-ebean" % "5.0.0")
+
+//CoffeeScript
+addSbtPlugin("com.typesafe.sbt" % "sbt-coffeescript" % "1.0.2")

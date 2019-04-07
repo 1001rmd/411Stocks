@@ -9,22 +9,31 @@ import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
-public class User extends Model{
+public class Leaderboard extends Model{
 
 	@Id @GeneratedValue
 	public long id;
 	
-	@OneToMany
-	List<Portfolio> porfolios;
-	
 	public String name;
 	
-	public String email;
+	@OneToMany
+	public List<Portfolio> portfolios;
 	
-	public String password;
+	@ManyToOne
+	public User owner;
+	
+	public double startingAccount;
 	
 	
+	public Leaderboard(String name, double startingAccount){
+		
+		this.name = name;
+		this.startingAccount = startingAccount;
+		portfolios = new ArrayList<Portfolio>();
+		
+	}
 
 }

@@ -5,7 +5,7 @@
 #Home Page
 GET     /                           controllers.HomeController.index(request: Request)
 
-#Login Fucntionality
+#Login Functionality
 GET		/login						controllers.LoginController.display(error : Boolean ?= false, request: Request)
 POST	/login						controllers.LoginController.login(request : Request)
 GET		/logout						controllers.LoginController.logout		
@@ -14,7 +14,7 @@ GET		/logout						controllers.LoginController.logout
 GET     /stock                      controllers.StockController.listStocks(request: Request)
 POST    /stock                      controllers.StockController.addStock(request: Request)
 
-#Users Fucntionality
+#Users Functionality
 GET		/user						controllers.UserController.display(request : Request)
 GET		/user/all					controllers.UserController.getAll
 GET		/user/manage				controllers.UserController.manage(request : Request)
@@ -23,6 +23,12 @@ POST    /user/update				controllers.UserController.updateUser(request: Request)
 GET		/user/:id					controllers.UserController.getUser(id : Long)
 POST	/user						controllers.UserController.addUser(request : Request)
 
+#Leaderboard Functionality
+GET		/leaderboard				controllers.BoardController.display(request : Request)
+POST	/leaderboard				controllers.BoardController.addBoard(request : Request)
+GET		/leaderboard/all			controllers.BoardController.getBoards()
+GET		/leaderboard/:id			controllers.BoardController.displayBoard(id : Long)
+POST	/leaderboard/:id			controllers.BoardController.joinBoard(id: Long, request : Request)
 
 
 
