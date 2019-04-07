@@ -24,6 +24,11 @@
 		@helper.CSRF.formField
 		<button type="submit">Join this Leaderboard</button>
 	}
+	<br><br>
+	@helper.form(action = helper.CSRF(routes.BoardController.leaveBoard(board.id))){
+		@helper.CSRF.formField
+		<button type="submit">Leave this Leaderboard</button>
+	}
 
 
 

@@ -88,8 +88,6 @@ public class BoardController extends Controller{
 		User user = userFinder.byId(sessionUserID);
 		Leaderboard board = boardFinder.byId(id);
 		
-		
-		//TODO Fix this
 		//Checks if user is already in the Leaderboard
 		boolean canJoin = true;
 		for(Portfolio p : user.getPortfolios()){
@@ -108,6 +106,44 @@ public class BoardController extends Controller{
 		}
 		
 		return ok(leaderboard.render(board, request));
+	}
+	
+	public Result leaveBoard(Long id, Request request){
+		
+		//TODO Let users leave
+		
+		//Checks to make sure the user is logged in
+		/*try{
+			sessionUserID = Long.parseLong(request.session().getOptional("userID").get());
+		}catch(Exception e){
+			//This error means the user is not currently logged in
+			//routes the user to login page
+			return redirect(routes.LoginController.display(false));
+		}
+		
+		//get User and Leaderboard
+		User user = userFinder.byId(sessionUserID);*/
+		Leaderboard board = boardFinder.byId(id);
+		
+		
+		//Checks if user is already in the Leaderboard
+		/*boolean canLeave = false;
+		for(Portfolio p : user.getPortfolios()){
+			if(p.leaderboard.id == board.id){
+				canLeave = true;
+			}
+		}
+		
+		if(canLeave){
+			//Creates new portfolio
+			Portfolio portfolio = new Portfolio(user, board);
+			Ebean.delete(portfolio);
+			board.save();
+			setBoards();
+		}
+		*/
+		return ok(leaderboard.render(board, request));
+		
 	}
 
 	public Result displayBoard(Long id, Request request){

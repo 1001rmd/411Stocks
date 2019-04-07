@@ -22,6 +22,10 @@ libraryDependencies += guice
 libraryDependencies += jdbc
 libraryDependencies += "io.ebean" % "ebean" % "4.1.0"
 
+// https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations
+libraryDependencies += "org.hibernate" % "hibernate-annotations" % "3.2.1.ga"
+
+
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
 

@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class User extends Model{
 	@Id @GeneratedValue
 	public long id;
 	
-	@OneToMany(cascade=CascadeType.ALL) @JsonBackReference
+	@OneToMany(cascade=CascadeType.ALL)
 	List<Portfolio> portfolios;
 	
 	public String name;
