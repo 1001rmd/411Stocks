@@ -6,14 +6,14 @@
 @(form: Form[User])(implicit request: Request, messages: play.i18n.Messages)
 
 
-<h1> Welcome to the Users Page </h1>
-<br> Fill out the form below to add a new user <br>
+<h1> Welcome to 411 Stocks </h1>
+<br> Fill out the form below to create a new account <br>
 
 @helper.form(action = helper.CSRF(routes.UserController.addUser)){
 		@helper.CSRF.formField
 		@helper.inputText(form("name"))
 		@helper.inputText(form("email"))
-		@helper.inputText(form("password"))
+		@helper.inputPassword(form("password"))
 		
 		<button type="submit">Create New User</button>
 }

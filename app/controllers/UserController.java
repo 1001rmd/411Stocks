@@ -21,6 +21,7 @@ public class UserController extends Controller{
 
 	private FormFactory ff;
 	private Form<User> userForm;
+	private Form<User> updateForm;
 	private MessagesApi messagesApi;
 	private Finder<Long, User> finder = new Finder<>(User.class);
 	long sessionUserID = 0;
@@ -81,7 +82,10 @@ public class UserController extends Controller{
 		//Ensures user is logged in
 		try{
 			sessionUserID = Long.parseLong(request.session().getOptional("userID").get());
-			return ok(manageUser.render(ff.form(User.class), request, messagesApi.preferred(request)));
+			
+			updateForm = ff.form(User.class);
+			return ok(manageUser.render(updateForm, request, messagesApi.preferred(request)));
+			
 		}catch(Exception e){
 			//This error means the user is not currently logged in
 			//routes the user to login page
@@ -91,8 +95,28 @@ public class UserController extends Controller{
 	}
 
 	//This function updates user information
-	public Result updateUser(){
-		return ok("TODO add update user function");
+	public Result updateUser(Request request){
+		
+		//Gets user
+		sessionUserID = Long.parseLong(request.session().getOptional("userID").get());
+		User user = finder.byId(sessionUserID);
+		
+		//Gets the updated user from Form
+		User updates = updateForm.bindFromRequest(request).get();
+		
+		
+		
+		//Finds new data and updates user
+		if(!updates.name.isEmpty()){
+			user.name = updates.name;
+		}
+		if(!updates.password.isEmpty()){
+			user.password = updates.password;
+		}
+		
+		user.save();
+		
+		return redirect(routes.UserController.manage());
 	}
 	
 	//This function deletes a user
@@ -105,11 +129,13 @@ public class UserController extends Controller{
 			//Deletes User
 			User user = finder.byId(sessionUserID);
 			Ebean.delete(user);
+			return redirect(routes.LoginController.display(false));
 			
-		}catch(Exception e){			
-		}
+		}catch(Exception e){
+			return ok();
+		} 
 		
-		return redirect(routes.LoginController.display(false));
+		//return ok();
 		
 	}
 

@@ -5,22 +5,36 @@
 #Home Page
 GET     /                           controllers.HomeController.index(request: Request)
 
-#Login Fucntionality
+#Login Functionality
 GET		/login						controllers.LoginController.display(error : Boolean ?= false, request: Request)
 POST	/login						controllers.LoginController.login(request : Request)
 GET		/logout						controllers.LoginController.logout		
 
+#Stock Functionality
+GET     /stock                      controllers.StockController.listStocks(request: Request)
+POST    /stock                      controllers.StockController.addStock(request: Request)
 
-#Users Fucntionality
+#Users Functionality
 GET		/user						controllers.UserController.display(request : Request)
 GET		/user/all					controllers.UserController.getAll
 GET		/user/manage				controllers.UserController.manage(request : Request)
 GET		/user/delete				controllers.UserController.deleteUser(request : Request)
-POST	/user/update				controllers.UserController.updateUser
+POST    /user/update				controllers.UserController.updateUser(request: Request)
 GET		/user/:id					controllers.UserController.getUser(id : Long)
 POST	/user						controllers.UserController.addUser(request : Request)
 
+#Leaderboard Functionality
+GET		/leaderboard				controllers.BoardController.display(request : Request)
+POST	/leaderboard				controllers.BoardController.addBoard(request : Request)
+GET		/leaderboard/all			controllers.BoardController.getBoards()
+POST	/leaderboard/leave/:id		controllers.BoardController.leaveBoard(id : Long, request : Request)
+GET		/leaderboard/:id			controllers.BoardController.displayBoard(id : Long, request : Request)
+POST	/leaderboard/:id			controllers.BoardController.joinBoard(id: Long, request : Request)
 
+
+#Portfolio Functionality
+GET		/portfolio/user				controllers.PortfolioController.display(request : Request)
+GET		/portfolio/:id				controllers.PortfolioController.displayPortfolio(id : Long, request : Request)
 
 
 # Map static resources from the /public folder to the /assets URL path

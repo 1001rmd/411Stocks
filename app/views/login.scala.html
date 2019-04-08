@@ -16,7 +16,7 @@
 @helper.form(action = helper.CSRF(routes.LoginController.login)){
 		@helper.CSRF.formField
 		@helper.inputText(form("email"))
-		@helper.inputText(form("password"))
+		@helper.inputPassword(form("password"))
 		
 		<button type="submit">Login</button>
 }

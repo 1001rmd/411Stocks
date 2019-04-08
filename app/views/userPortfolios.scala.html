@@ -1,0 +1,20 @@
+@(user : User)
+
+	<a href="@routes.HomeController.index"> Home </a><br>
+	<table>
+        <caption><h2>@user.name's Portfolios</h2></caption>
+        <thead>
+            <tr><th><h3>Name</h3></th><th><h3>Worth</h3></th>
+        </thead>
+        <tbody>
+        @for(p <- user.getPortfolios()) {
+            <td>
+				<a href="@routes.PortfolioController.displayPortfolio(p.id)">@p.leaderboard.name </a>
+			</td>
+                <td>@p.getValue()</td></tr>
+        }
+        </tbody>
+    </table>
+
+
+	

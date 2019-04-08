@@ -1,0 +1,14 @@
+package models;
+
+public class listStock{
+
+    public String symbol;
+
+    public String description;
+
+    public listStock(String symbol, String description){
+        this.description = description;
+        this.symbol = symbol;
+    }
+
+}

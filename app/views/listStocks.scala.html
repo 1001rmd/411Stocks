@@ -1,0 +1,60 @@
+@import play.mvc.Http.Request
+@import helper._
+@import controllers._
+@import play.data.Form
+@(stocks: Seq[Stock], form: Form[Stock])(implicit request: Request, messages: play.i18n.Messages)
+
+@main("Stock") {
+
+    <section id="top">
+        <div class="wrapper">
+            <h1>Add Stocks</h1>
+        </div>
+    </section>
+
+
+    <div id="content" class="wrapper doc">
+        <article>
+
+        @helper.form(routes.StockController.addStock) {
+            @helper.CSRF.formField
+
+            @helper.inputText(form("Enter Company Name"))
+
+            @helper.inputText(form("Enter Stock Symbol"))
+
+            <button type="submit">Add Stock</button>
+        }
+        </article>
+
+
+    @request.flash.asScala().data.map { case (name, value) =>
+    <div class="@name">@value</div>
+    }
+
+    <table style = "width:100%">
+        <caption><h2>Your Stocks</h2></caption>
+        <thead>
+            <tr><th><h3>Symbol</h3></th><th><h3>Description</h3></th>
+        </thead>
+        <tbody>
+        @for(s <- stocks) {
+            <tr><td>@s.symbol</td>
+                <td>@s.description</td></tr>
+        }
+        </tbody>
+    </table>
+
+    <hr/>
+
+
+    @if(form.hasGlobalErrors) {
+        @form.globalErrors.asScala.map { error: play.data.validation.ValidationError =>
+            <div>
+                @error.key: @error.message
+            </div>
+        }
+    }
+
+}
+
