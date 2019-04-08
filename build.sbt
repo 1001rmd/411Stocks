@@ -25,6 +25,8 @@ libraryDependencies += "io.ebean" % "ebean" % "4.1.0"
 // https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations
 libraryDependencies += "org.hibernate" % "hibernate-annotations" % "3.2.1.ga"
 
+libraryDependencies += "org.json" % "json" % "20180813"
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.7.2"
 
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
