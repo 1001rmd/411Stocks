@@ -1,0 +1,143 @@
+@*
+@(message: String, style: String = "java")
+*@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+.tab button:hover {
+    background-color: #ddd;
+}
+.tab button.active {
+    background-color: #ccc;
+}
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+</style>
+</head>
+
+@main("Trading Guide") {
+    <section id="top">
+        <div class="wrapper">
+            <h1>Welcome to Trading!</h1>
+        </div>
+    </section>
+
+
+    <div id="content" class="wrapper doc">
+        <article>
+            <h1>5 steps to help you start trading!</h1>
+
+            <p>If you are new to trading, these 5 steps will help you make a good start!</p>
+
+            <h2>1. Decide if trading is the right strategy for you</h2>
+            <p>
+                There is definitely room for trading stocks on your own dime. That being said, don't put all of your financial eggs in one basket, especially if you are just starting off. A good number to aim for would be somewhere around 5-10% of investable assests. Also remember that trading is different than investing. Trading aims for short-term gains, while investing aims for long-term gains. Trading also inherently carries more risks and required a lot more time and effort than other options. You will need to dedicate time to this, and be an active participant, closely watching your stocks so that you can make the right move in time. If this sounds like too much work, then doing other things with your time and money may be advantageous.
+            </p>
+
+            <body>
+            <h2>2. Get an education</h2>
+
+            <div class="tab">
+                <button class="tablinks" onclick="openEvent(event, 'Books')">Read Books and Articles</button>
+                <button class="tablinks" onclick="openEvent(event, 'Mentor')">Find a Mentor</button>
+                <button class="tablinks" onclick="openEvent(event, 'Greats')">Study the Greats</button>
+                <button class="tablinks" onclick="openEvent(event, 'Market')">Read and Follow the Market</button>
+                <button class="tablinks" onclick="openEvent(event, 'Class')">Take a Class or Seminar</button>
+                <button class="tablinks" onclick="openEvent(event, 'Sim')">Practice Through a Simulator</button>
+            </div>
+
+
+            <div id="Books" class="tabcontent">
+                <p>This may be common sense, but reading up on the subject you are trying to learn is very helpful. Some of these books can help you get started:</p>
+                <ul>
+                    <li>'How to Make Money in Stocks: A Winning System in Good Times Or Bad' by William O'Neil</li>
+                    <li>'One Up on Wall Street' by John Rothchild and Peter Lynch</li>
+                    <li>'The Little Book That Still Beats the Market' by Joel Greenblatt</li>
+                </ul>
+            </div>
+            <div id="Mentor" class="tabcontent">
+                <p>Find someone who is already great at trading and learn from them. They have a lot of knowledge they can share with you, and it would be to your benefit to listen to them! If they are helpful, they can be instrumental to helping you get past barrier of entry.</p>
+            </div>
+            <div id="Greats" class="tabcontent">
+                <p>Be inspired by the people of the past who made a name for themselves. Follow in the footsteps of greats like Warren Buffett, George Soros, and Jesse Livermore</p>
+            </div>
+            <div id="Market" class="tabcontent">
+                <p>This is key to understanding how the stock market works, and ultimately how to make money. Some good resources for this purpose are <a href="https://finance.yahoo.com/">Yahoo Finance</a>or <a href="https://www.google.com/finance">Google Finance.</a></p>
+            </div>
+            <div id="Class" class="tabcontent">
+                <p>Seminars can be very helpful for gathering information from people who know what they are talking about. An added bonus to seminars is that some of them are free! Going to classes on the subject also works similarly to seminars, but can be expensive.</p>
+            </div>
+            <div id="Sim" class="tabcontent">
+                <p>Simulations are another popular way for people to learn how to trade effectively. Giving yourself real situations and decisions to make can be extremely beneficial to helping you apply the knowledge you've learned and to give you feedback on your decisions that won't break your bank.</p>
+            </div>
+
+            </body>
+
+
+            <script>function openEvent(evt, eventName){
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for(i = 0; i <tabcontent.length; i ++){
+                    tabcontent[i].style.display = "none";
+                }
+
+                tablinks = document.getElementsByClassName("tablinks");
+                for(i = 0; i < tablinks.length; i++){
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(eventName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+            </script>
+
+            <h2>3. Select an online broker.</h2>
+            <p>
+                You'll need to choose a broker that will fulfill your needs. As someone who is just starting off, you should choose a broker who has a good reputation with customer support. Additionally, choosing a broker with educational resources available is a plus that should be sought after.
+            </p>
+
+            <h2>4. Start researching stocks</h2>
+            <p>
+                Now that your ready to start investing, the only thing left is to start picking stocks!
+                <br>
+                <br>Use the information provided by your broker to get an understanding of the company and its risks and benefits. Start slowly, invest in only a few companies until you understand what you are doing. Have a set amount of money are prepared to lose. If you end up making money, try investing it back into the company or diversify into other companies.
+            </p>
+
+            <h2>5. Make a plan and stick to it</h2>
+            <p>
+                Putting up your own money can be scary. Many people get spooked when a stock loses a small amount and pull it instantly, especially those who are new to trading. This is why its important to make a plan, and stick to it. Know how low you are willing to let the stock fall before you bail on it. Use the right type of trade orders to help you along the way. An example would be a stop-loss order in which the stock sells if it falls below a certain price.
+            </p>
+
+
+        </article>
+
+        <aside>
+            <h3>Links</h3>
+            <ul>
+                <li><a href="@routes.LoginController.logout"> Logout </a></li>
+                <li><a href="@routes.UserController.manage"> Manage User </a></li>
+                <li><a href="@routes.PortfolioController.display"> Portfolios </a></li>
+                <li><a href="@routes.BoardController.display"> Leaderboards </a></li>
+                <li><a href="@routes.NewsController.newsPage"> Stock News </a></li>
+            </ul>
+        </aside>
+    </div>
+}
