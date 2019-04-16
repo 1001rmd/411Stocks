@@ -14,6 +14,12 @@ GET		/logout						controllers.LoginController.logout
 GET     /stock                      controllers.StockController.listStocks(request: Request)
 POST    /stock                      controllers.StockController.addStock(request: Request)
 
+#Guide Functionality
+GET     /guide                      controllers.GuideController.guidePage
+
+#News Functionality
+GET     /news                       controllers.NewsController.newsPage
+
 #Users Functionality
 GET		/user						controllers.UserController.display(request : Request)
 GET		/user/all					controllers.UserController.getAll
