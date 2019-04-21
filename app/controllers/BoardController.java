@@ -15,7 +15,7 @@ import play.i18n.MessagesApi;
 import io.ebean.Finder;
 import io.ebean.Ebean;
 import javax.inject.Inject;
-import play.i18n.MessagesApi;
+
 
 public class BoardController extends Controller{
 

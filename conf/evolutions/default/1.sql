@@ -22,7 +22,15 @@ create table portfolio (
 
 create table stock (
   symbol                        varchar(255),
-  name                          varchar(255)
+  name                          varchar(255),
+  stock_id                      bigint not null,
+  ask_price                     double not null,
+  bid_price                     double not null,
+  company_name                  varchar(255),
+  exchange                      varchar(255),
+  industry                      varchar(255),
+  description                   varchar(255),
+  ceo                           varchar(255)
 );
 
 create table user (
