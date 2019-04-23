@@ -2,6 +2,9 @@ package controllers;
 
 import play.mvc.*;
 import models.Stock;
+import models.StockData;
+import models.Portfolio;
+
 import play.data.*;
 import views.html.*;
 import org.slf4j.Logger;
@@ -23,6 +26,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.math.BigDecimal;
 import play.libs.Json.*;
+import play.libs.ws.*;
 
 import static play.libs.Scala.asScala;
 
@@ -32,30 +36,50 @@ public class StockController extends Controller{
     private final Form<Stock> form;
     //public Form <listStock> forms;
     private MessagesApi messagesApi;
-    private final ArrayList<Stock> stocks;
-
+    private ArrayList<StockData> stocks;
     private final Logger logger = LoggerFactory.getLogger(getClass());
+	private StockDataController data;
 
     @Inject
-    public StockController(FormFactory formFactory, MessagesApi messagesApi){
-        this.form = formFactory.form(Stock.class);
+    public StockController(FormFactory formFactory, MessagesApi messagesApi, StockDataController data){
+        
+		this.form = formFactory.form(Stock.class);
         this.messagesApi = messagesApi;
-        
-		this.stocks = new ArrayList<Stock>();
-        //stocks.add(new Stock("APPL", "Apple"));
-        //stocks.add(new Stock("GOOG", "Google"));
-        
+		this.data = data;
+
     }
 
 
-    public Result listStocks(Http.Request request)
-    {
-        return ok(views.html.listStocks.render(asScala(stocks), form, request, messagesApi.preferred(request)));
+    public Result listStocks(Http.Request request, String category){
+		
+		//Tests for a correct category
+		String[] categories = {"infocus ", "mostactive ", "gainers ", "losers "};
+		boolean catError = true;
+		for(String type : categories){
+			if(category.equals(type)){
+				catError = false;
+			}
+		}
+		if(catError){
+			category = "infocus";
+		}
+		
+		//Query the API
+		stocks = data.getStockList(category);
+		
+        return ok(views.html.listStocks.render(asScala(stocks), category.toUpperCase(), form, request, messagesApi.preferred(request)));
+		
     }
+	
+	public Result buyStock(Portfolio portfolio){
+		
+		return ok();
+		
+	}
 
     public Result addStock(Http.Request request) throws IOException
     {
-        final Form<Stock> boundForm = form.bindFromRequest(request);
+        /*final Form<Stock> boundForm = form.bindFromRequest(request);
 
         //listStock listStocks = forms.bindFromRequest(request).get();
 
@@ -69,62 +93,13 @@ public class StockController extends Controller{
             String description = getStockDetails(symbolInput);
             data.setDescription(description);
             //stocks.add(new Stock(data.getSymbol, data.getDescription));
-            return redirect(routes.StockController.listStocks())
+            return redirect(routes.StockController.listStocks("infocus"))
                     .flashing("info", "Stock successfully added!");
-        }
+        }*/
+		
+		return ok();
     }
 
-    public String getStockDetails(String symbol) throws IOException
-    {
-        String APIurl = "https://api.iextrading.com/1.0/stock/" + symbol + "/company";
-        String charset = "UTF-8";
-
-        URLConnection connection = new URL(APIurl).openConnection();
-        connection.setRequestProperty("Accept-Charset", charset);
-        InputStream response = connection.getInputStream();
-        String textValue = new String();
-        Boolean lineEnd = false;
-        Boolean lineStart = false;
-        ArrayList<String> list = new ArrayList<String>();
-        int charValue = 0;
-        while (charValue != -1) {
-            charValue = response.read();
-            if ((char) charValue == '{') {
-                lineStart = true;
-                lineEnd = false;
-            } else if ((char) charValue == '}') {
-                lineEnd = true;
-                lineStart = false;
-            }
-
-            if (lineStart) {
-                textValue += (char) charValue;
-            } else if (lineEnd) {
-                textValue += (char) charValue;
-                list.add(textValue);
-                textValue = "";
-                lineEnd = false;
-            }
-        }
-        String symbolz = "test";
-        String descriptionz = "test";
-
-        Stock stock = new Stock(symbolz, descriptionz);
-        for (int i = 0; i < list.size(); i++) {
-            JSONObject obj = new JSONObject(list.get(i));
-            stock.setSymbol(obj.getString("symbol"));
-            stock.setCompanyName(obj.getString("companyName"));
-            stock.setExchange(obj.getString("exchange"));
-            stock.setIndustry(obj.getString("industry"));
-            stock.setDescription(obj.getString("description"));
-            //String symbols = stock.setSymbol(obj.getString("symbol"));
-            //String description = stock.setDescription(obj.getString("description"));
-            String descriptions = stock.getDescription();
-            stock.setCEO(obj.getString("CEO"));
-        }
-        String descriptions = stock.getDescription();
-        //return stock;
-        return descriptions;
-    }
+    
 
 }

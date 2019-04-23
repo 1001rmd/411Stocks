@@ -3,7 +3,7 @@
 	<a href="@routes.HomeController.index"> Home </a><br>
 	<a href="@routes.PortfolioController.display"> Back </a><br>
 	
-	<br>Total Value: $@port.getValue
+	<br>Total Value: $@port.value
 	<br>Account Balance: $@port.account<br>
 	<table>
         <caption><h2>@port.leaderboard.name</h2></caption>
@@ -20,3 +20,6 @@
         }*@
         </tbody>
     </table>
+	
+	<br><a href="@routes.StockController.listStocks("infocus ")"> View Top Stocks </a>
+	

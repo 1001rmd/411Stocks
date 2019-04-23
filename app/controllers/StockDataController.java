@@ -26,21 +26,8 @@ public class StockDataController extends Controller{
 		this.ws = ws;
 	}
 	
+	
 	public ArrayList<StockData> getStockList(String category){
-		
-		
-		//Tests for a correct category
-		String[] categories = {"infocus", "mostactive", "gainers", "losers"};
-		boolean catError = true;
-		for(String type : categories){
-			if(category.equals(type)){
-				catError = false;
-			}
-		}
-		if(catError){
-			category = "infocus";
-		}
-		
 		
 		//API Call and return
 		try{

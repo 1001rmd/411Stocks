@@ -11,7 +11,9 @@ POST	/login						controllers.LoginController.login(request : Request)
 GET		/logout						controllers.LoginController.logout		
 
 #Stock Functionality
-GET     /stock                      controllers.StockController.listStocks(request: Request)
+GET     /stock/list/      			controllers.StockController.listStocks(request: Request, category = "infocus")
+GET     /stock/list/:category       controllers.StockController.listStocks(request: Request, category : String)
+
 POST    /stock                      controllers.StockController.addStock(request: Request)
 
 #Guide Functionality

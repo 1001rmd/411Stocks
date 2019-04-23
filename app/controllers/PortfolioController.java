@@ -21,10 +21,13 @@ public class PortfolioController extends Controller{
 
 	private Finder<Long, User> userFinder = new Finder<>(User.class);
 	private Finder<Long, Portfolio> portFinder = new Finder<>(Portfolio.class);
+	private StockDataController api;
 	private long sessionUserID;
 	
 	@Inject
-	public PortfolioController(){}
+	public PortfolioController(StockDataController dataController){
+		api = dataController;
+	}
 	
 	
 	
@@ -61,6 +64,7 @@ public class PortfolioController extends Controller{
 		
 		
 		Portfolio port = portFinder.byId(id);
+		port.getValue(api);
 		return ok(portfolio.render(port)); 
 	}
 	

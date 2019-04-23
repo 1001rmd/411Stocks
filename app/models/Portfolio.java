@@ -3,9 +3,12 @@ package models;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
+import controllers.StockDataController;
 
 import io.ebean.Model;
+import io.ebean.Finder;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
@@ -25,9 +28,14 @@ public class Portfolio extends Model{
 	@ManyToOne @JsonManagedReference
 	public Leaderboard leaderboard;
 	
+	@OneToMany
 	public List<Stock> stocks;
 	
-	public LinkedList<String> history;
+	@Transient
+	public List<StockData> stockData;
+	
+	@OneToMany
+	public List<History> history;
 	
 	public double value;
 	
@@ -40,27 +48,37 @@ public class Portfolio extends Model{
 		account = board.startingAccount;
 		
 		stocks = new ArrayList<Stock>();
-		history = new LinkedList<String>();
+		history = new LinkedList<History>();
 		
 	}
 	
-	public double getValue(){
-		/*TODO 
-		* This method will query the api to find the current value
-		* of the portfolio and update the value variable
-		*/
-		value = account; //+ value of stocks
-		return value;
+	public List<Stock> getStocks(){
+		stocks = new Finder<>(Stock.class).query().where().eq("portfolio", this).findList();
+		return stocks;
 	}
 	
-	public List<Stock> getStock(){
+	public List<History> getHistory(){
+		history = new Finder<>(History.class).query().where().eq("portfolio", this).findList();
+		return history;
+	}
+	
+	public double getValue(StockDataController api){
 		
-		//TODO get stocks from database
-		if(stocks == null){
-			stocks = new ArrayList<Stock>();
+		value = 0.0;
+		
+		//Ensures lists are inialized
+		getStocks();
+		if(stocks == null){ stocks = new ArrayList<Stock>();}
+		stockData = new ArrayList<StockData>();
+		
+		//Iterate through stocks
+		for(Stock s : stocks){
+			value+= s.getValue(api);
+			stockData.add(api.getStock(s.symbol));
 		}
 		
-		return stocks;
+		value += account; //+ value of unspent money
+		return value;
 	}
 
 
