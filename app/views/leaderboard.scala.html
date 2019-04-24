@@ -2,8 +2,21 @@
 
 @(board : Leaderboard)(implicit requst : Request)
 
-	<a href="@routes.HomeController.index"> Home </a><br>
-	<a href="@routes.BoardController.display"> Back </a>
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/materialize.css")">
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+
+<div class="container">
+<nav class="light-blue lighten-1" role="navigation">
+	<div class="nav-wrapper container">
+		<a class="brand-logo">411 Stocks</a>
+		<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li><a href="@routes.HomeController.index"> Home </a></li>
+			<li><a href="@routes.BoardController.display"> Back </a></li>
+		</ul>
+	</div>
+</nav>
+
+	<div class ="row">
 	<table>
         <caption><h2>@board.name</h2></caption>
         <thead>
@@ -20,6 +33,8 @@
     </table>
 	
 	<br><br><br>
+
+		<div class="col s4">
 	@helper.form(action = helper.CSRF(routes.BoardController.joinBoard(board.id))){
 		@helper.CSRF.formField
 		<button type="submit">Join this Leaderboard</button>
@@ -29,6 +44,18 @@
 		@helper.CSRF.formField
 		<button type="submit">Leave this Leaderboard</button>
 	}
+		</div>
+<ul class="sidenav sidenav-fixed right-aligned">
+
+	<h3>Links</h3>
+	<li><a href="@routes.UserController.manage"> Manage User </a></li>
+	<li><a href="@routes.PortfolioController.display"> Portfolios </a></li>
+	<li><a href="@routes.BoardController.display"> Leaderboards </a></li>
+	<li><a href="@routes.GuideController.guidePage"> Trading Guide </a></li>
+	<li><a href="@routes.NewsController.newsPage"> Stock News </a></li>
+	<li><a href="@routes.LoginController.logout"> Logout </a></li>
+</ul>
+	</div>
 
 
-
+</div>
