@@ -13,8 +13,14 @@ GET		/logout						controllers.LoginController.logout
 #Stock Functionality
 GET     /stock/list/      			controllers.StockController.listStocks(request: Request, category = "infocus")
 GET     /stock/list/:category       controllers.StockController.listStocks(request: Request, category : String)
+GET 	/stock/shop/:id/			controllers.StockController.shopStock(id : Long, sym = "")
+GET 	/stock/shop/:id/:sym		controllers.StockController.shopStock(id : Long, sym : String)
 
-POST    /stock                      controllers.StockController.addStock(request: Request)
+POST 	/stock/buy					controllers.StockController.buyStock(request: Request)
+#POST	/stock/buy/:id/:sym/:q		controllers.StockController.buyStock(id : Long, sym : String, q : Double)
++ nocsrf
+POST	/stock/sell/:id/:sym/:q		controllers.StockController.sellStock(id: Long, sym : String, q : Double)
+
 
 #Guide Functionality
 GET     /guide                      controllers.GuideController.guidePage

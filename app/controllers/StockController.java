@@ -4,7 +4,9 @@ import play.mvc.*;
 import models.Stock;
 import models.StockData;
 import models.Portfolio;
+import models.BuyRequest;
 
+import io.ebean.Finder;
 import play.data.*;
 import views.html.*;
 import org.slf4j.Logger;
@@ -13,9 +15,8 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
 import play.mvc.*;
-
+import play.mvc.Http.Request;
 import org.json.JSONObject;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
@@ -33,17 +34,22 @@ import static play.libs.Scala.asScala;
 @Singleton
 public class StockController extends Controller{
 
-    private final Form<Stock> form;
+    private final Form<BuyRequest> form;
     //public Form <listStock> forms;
     private MessagesApi messagesApi;
     private ArrayList<StockData> stocks;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 	private StockDataController data;
+	
+	//these variables exist so the controller can remember where to buy and sell stock
+	private Portfolio portfolio;
+	private String stockSymbol;
+	
 
     @Inject
     public StockController(FormFactory formFactory, MessagesApi messagesApi, StockDataController data){
         
-		this.form = formFactory.form(Stock.class);
+		this.form = formFactory.form(BuyRequest.class);
         this.messagesApi = messagesApi;
 		this.data = data;
 
@@ -67,38 +73,79 @@ public class StockController extends Controller{
 		//Query the API
 		stocks = data.getStockList(category);
 		
-        return ok(views.html.listStocks.render(asScala(stocks), category.toUpperCase(), form, request, messagesApi.preferred(request)));
+        return ok(views.html.listStocks.render(asScala(stocks), category.toUpperCase()));
 		
     }
 	
-	public Result buyStock(Portfolio portfolio){
+	
+	public Result shopStock(Long portId, String symbol){
 		
-		return ok();
+		
+		Portfolio portfolio = new Finder<>(Portfolio.class).byId(portId);
+		portfolio.getValue(data);
+		this.portfolio = portfolio;
+		
+		StockData stock = data.getStock(symbol);
+		stockSymbol = symbol;
+		
+		return ok(views.html.buyStock.render(portfolio, stock, form));
 		
 	}
 
-    public Result addStock(Http.Request request) throws IOException
-    {
-        /*final Form<Stock> boundForm = form.bindFromRequest(request);
-
-        //listStock listStocks = forms.bindFromRequest(request).get();
-
-        if(boundForm.hasErrors()){
-            logger.error("error = {}", boundForm.errors());
-            return badRequest(views.html.listStocks.render(asScala(stocks), boundForm, request, messagesApi.preferred(request)));
-        } else{
-            Stock data = boundForm.get();
-            String symbolInput = "amzn";
-            //String descriptionInput = data.getDescription;
-            String description = getStockDetails(symbolInput);
-            data.setDescription(description);
-            //stocks.add(new Stock(data.getSymbol, data.getDescription));
-            return redirect(routes.StockController.listStocks("infocus"))
-                    .flashing("info", "Stock successfully added!");
-        }*/
+    public Result buyStock(Request request){
+		
+		BuyRequest buyRequest = form.bindFromRequest(request).get();
+		
+		try{
+		
+			//Gets prospective stock
+			double quantity = Double.parseDouble(buyRequest.quantity);
+			Stock stock = new Stock(stockSymbol, quantity, portfolio);
+			
+			//Checks for adequite account balance
+			if(portfolio.account < stock.getValue(data)){
+				throw new Exception();
+			}
+			
+			//Pays for stock
+			portfolio.account = portfolio.account - stock.getValue(data);
+			
+			//Checks to see if stock is already in portfolio
+			boolean found = false;
+			for(Stock s: portfolio.stocks){
+				
+				if(s.symbol.equals(stock.symbol)){
+					found = true;
+					s.quantity += stock.quantity;
+					s.save();
+				}
+				
+			}
+			if(!found){
+				stock.save();
+			}
+			
+			portfolio.save();
+			
+			
+			//clears the saved variables for the next purchase
+			long id = portfolio.id;
+			portfolio = null;
+			stockSymbol = "";
+			
+			return redirect(routes.PortfolioController.displayPortfolio(id));
+			
+		
+		}catch(Exception e){}
+		
+		return redirect(routes.StockController.shopStock(portfolio.id, stockSymbol));
+		
+	}
+	
+	public Result sellStock(long id, String symbol, double quantity){
 		
 		return ok();
-    }
+	}
 
     
 

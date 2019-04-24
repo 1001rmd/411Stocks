@@ -18,6 +18,12 @@ public class Stock extends Model{
 	
 	@ManyToOne @JsonManagedReference
 	public Portfolio portfolio;
+	
+	public Stock(String symbol, double quantity, Portfolio portfolio){
+		this.symbol = symbol;
+		this.quantity = quantity;
+		this.portfolio = portfolio;
+	}
  
 	public double getValue(StockDataController api){
 		

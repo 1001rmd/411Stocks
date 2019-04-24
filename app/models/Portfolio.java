@@ -52,7 +52,7 @@ public class Portfolio extends Model{
 		
 	}
 	
-	public List<Stock> getStocks(){
+	public List<Stock> getStock(){
 		stocks = new Finder<>(Stock.class).query().where().eq("portfolio", this).findList();
 		return stocks;
 	}
@@ -67,7 +67,7 @@ public class Portfolio extends Model{
 		value = 0.0;
 		
 		//Ensures lists are inialized
-		getStocks();
+		getStock();
 		if(stocks == null){ stocks = new ArrayList<Stock>();}
 		stockData = new ArrayList<StockData>();
 		

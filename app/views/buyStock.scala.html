@@ -1,0 +1,88 @@
+@(port : Portfolio, stock : StockData, form : Form[BuyRequest])
+
+	
+	
+	
+	<a href="@routes.HomeController.index"> Home </a><br>
+	<a href="@routes.PortfolioController.displayPortfolio(port.id)"> Back </a><br>
+	
+
+	<br><h3>@port.leaderboard.name</h3>
+	<br>Account Balance: $@port.account<br><br>
+	
+	@if(stock != null){
+	
+		<table>
+			<tr>
+				<td>Name </td>
+				<td>@stock.companyName </td>
+			</tr>
+			<tr>
+				<td>Stock Price </td>
+				<td>@stock.latestPrice</td>
+			</tr>
+			<tr>
+				<td>Daily Change </td>
+				<td>@stock.changePercent </td>
+			</tr>
+			<tr>
+				<td>YTD Change </td>
+				<td>@stock.ytdChange </td>
+			</tr>
+			<tr>
+				<td>Year High </td>
+				<td>@stock.week52High </td>
+			</tr>
+			<tr>
+				<td>Year Low </td>
+				<td>@stock.week52Low </td>
+			</tr>
+		</table>
+		
+		@helper.form(action = helper.CSRF(routes.StockController.buyStock)){
+			@helper.CSRF.formField
+			@helper.inputText(form("quantity"))
+			
+			<button type="submit">Buy Stock</button>
+		}
+		
+	}
+	
+	<br>
+	Search for a stock by the stock symbol
+    <input type="text" id="symbol">
+    <button onClick="searchStock()"> Search </button>
+ 
+	
+	<br><a href="@routes.StockController.listStocks("infocus ")"> View Top Stocks </a>
+	
+	<script>
+		function searchStock(){
+
+			var symbol = document.getElementById("symbol").value;
+			var id = window.location.pathname.split("/")[3];
+			window.location="/stock/shop/" + id + "/" + symbol;
+		}
+		
+		function buyStock(){
+		
+			var quantity = document.getElementById("quantity").value;
+			
+			if(!isNaN(quantity) && quantity != ""){
+			
+				var portId = window.location.pathname.split("/")[3];
+				var symbol = window.location.pathname.split("/")[4];
+				data = {
+					id: portId,
+					sym: symbol,
+					q: quantity
+				}
+				url = "/stock/buy/"
+				$.post(url, data);
+			}
+			
+			
+		}
+		
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

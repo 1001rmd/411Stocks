@@ -11,15 +11,16 @@
             <tr><th><h3>Stock</h3></th><th><h3>Shares</h3></th><th><h3>Value</h3></th>
         </thead>
         <tbody>
-        @*for(s <- port.getStock()) {
+        @for(s <- port.getStock()) {
             <tr>
-				<td> TODO get stock name</td>
-				<td>TODO get stock quantity</td>
-				<td>TODO get stock value</td>
+				<td>@s.symbol</td>
+				<td>@s.quantity</td>
+				<td>@s.value</td>
 			</tr>
-        }*@
+        }
         </tbody>
     </table>
 	
+	<br><a href="@routes.StockController.shopStock(port.id, "")"> Buy Stock </a>
 	<br><a href="@routes.StockController.listStocks("infocus ")"> View Top Stocks </a>
 	

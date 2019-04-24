@@ -65,7 +65,7 @@ public class PortfolioController extends Controller{
 		
 		Portfolio port = portFinder.byId(id);
 		port.getValue(api);
-		return ok(portfolio.render(port)); 
+		return ok(views.html.portfolio.render(port)); 
 	}
 	
 
