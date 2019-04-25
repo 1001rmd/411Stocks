@@ -5,21 +5,9 @@
 
 @(form: Form[User])(implicit request: Request, messages: play.i18n.Messages)
 
-<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/materialize.css")">
-<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-
-<div class="container">
-<nav class="light-blue lighten-1" role="navigation">
-	<div class="nav-wrapper container">
-		<a class="brand-logo">411 Stocks</a>
-	</div>
-</nav>
-
-	<div class ="row">
 
 <h1> Welcome to 411 Stocks </h1>
 <br> Fill out the form below to create a new account <br>
-	<div class="col s4">
 
 @helper.form(action = helper.CSRF(routes.UserController.addUser)){
 		@helper.CSRF.formField
@@ -28,10 +16,7 @@
 		@helper.inputPassword(form("password"))
 		
 		<button type="submit">Create New User</button>
-
 }
-	</div>
-	</div>
-</div>
+	
 	
 

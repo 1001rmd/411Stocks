@@ -2,18 +2,7 @@
 @(stocks: Seq[StockData], listName : String)
 
 
-<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/materialize.css")">
-<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 
-<div class="container">
-<nav class="light-blue lighten-1" role="navigation">
-	<div class="nav-wrapper container">
-		<a class="brand-logo">411 Stocks</a>
-		<ul id="nav-mobile" class="right hide-on-med-and-down">
-			<li><a href="@routes.HomeController.index"> Home </a></li>
-		</ul>
-	</div>
-</nav>
 
 
     <section id="top">
@@ -22,14 +11,12 @@
         </div>
     </section>
 
-	<h3>Lists: </h3><br>
-	<a href="@routes.StockController.listStocks("infocus ")"> In Focus </a> &emsp;
-	<a href="@routes.StockController.listStocks("mostactive ")"> Most Active </a> &emsp;
-	<a href="@routes.StockController.listStocks("gainers ")"> Gainers </a> &emsp;
-	<a href="@routes.StockController.listStocks("losers ")"> Losers </a> &emsp;
+
 
     <div id="content" class="wrapper doc">
-		
+	
+		<a href="@routes.HomeController.index"> Home </a><br><br>
+
 		<table style = "width:100%">
 			<caption><h2>Top Stocks: @listName</h2></caption><br>
 			<thead>
@@ -51,23 +38,23 @@
 			}
 			</tbody>
 		</table>
-
+		<br><br>
+		
+		<h3>Lists: </h3><br>
+		<a href="@routes.StockController.listStocks("infocus ")"> In Focus </a> &emsp; 
+		<a href="@routes.StockController.listStocks("mostactive ")"> Most Active </a> &emsp;  
+		<a href="@routes.StockController.listStocks("gainers ")"> Gainers </a> &emsp; 
+		<a href="@routes.StockController.listStocks("losers ")"> Losers </a> &emsp; 
+		
+		
+		<br><br>
 		
 		
 	</div>
 
+        
 
-<ul class="sidenav sidenav-fixed right-aligned">
 
-	<h3>Links</h3>
-	<li><a href="@routes.UserController.manage"> Manage User </a></li>
-	<li><a href="@routes.PortfolioController.display"> Portfolios </a></li>
-	<li><a href="@routes.BoardController.display"> Leaderboards </a></li>
-	<li><a href="@routes.GuideController.guidePage"> Trading Guide </a></li>
-	<li><a href="@routes.NewsController.newsPage"> Stock News </a></li>
-	<li><a href="@routes.LoginController.logout"> Logout </a></li>
-</ul>
-</div>
  
   
 

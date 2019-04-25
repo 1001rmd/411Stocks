@@ -1,16 +1,17 @@
 @(message: String, style: String = "java")
 
 @defining(play.core.PlayVersion.current) { version =>
-<div class="container">
-    <nav class="light-blue lighten-1" role="navigation">
-        <div class="nav-wrapper container">
-            <a class="brand-logo">@message</a>
-    </div>
-    </nav>
+
+    <section id="top">
+        <div class="wrapper">
+            <h1>@message</h1>
+        </div>
+    </section>
+
     <div id="content" class="wrapper doc">
-              <div class="row">
-                <div class="col">
-			<h1 class="header center">Welcome to our App</h1>
+        <article>
+		
+			<h2>Welcome to our App</h2>
 			
 			<p>
                 	<ul>
@@ -35,23 +36,20 @@
                     </ul>
             </p>
             
-                </div>
+        </article>
 
-
-
-
-            <ul class="sidenav sidenav-fixed right-aligned">
-
-                <h3>Links</h3>
+        <aside>
+            <h3>Links</h3>
+            <ul>
+				
+                <li><a href="@routes.LoginController.logout"> Logout </a></li>
                 <li><a href="@routes.UserController.manage"> Manage User </a></li>
 				<li><a href="@routes.PortfolioController.display"> Portfolios </a></li>
 				<li><a href="@routes.BoardController.display"> Leaderboards </a></li>
                 <li><a href="@routes.GuideController.guidePage"> Trading Guide </a></li>
                 <li><a href="@routes.NewsController.newsPage"> Stock News </a></li>
-                <li><a href="@routes.LoginController.logout"> Logout </a></li>
             </ul>
-                  </div>
+        </aside>
 
     </div>
-</div>
 }

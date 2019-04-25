@@ -5,24 +5,13 @@
 
 @(form: Form[UserLoginRequest], error: Boolean)(implicit request: Request, messages: play.i18n.Messages)
 
-<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/materialize.css")">
-<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 
-<div class="container">
-	<nav class="light-blue lighten-1" role="navigation">
-		<div class="nav-wrapper container">
-			<a class="brand-logo">411 Stocks</a>
-		</div>
-	</nav>
-<div class ="row">
 <h1> Login </h1> <br>
 
 @if(error){
 	<font color='red'>Your login credentials are incorrect <br>
 	Try again <br></font>
 }
-
-	<div class="col s4">
 
 @helper.form(action = helper.CSRF(routes.LoginController.login)){
 		@helper.CSRF.formField
@@ -32,8 +21,4 @@
 		<button type="submit">Login</button>
 }
 
-	</div>
-</div>
 <br><a href="@routes.UserController.display">Or Click here to create a new user</a>
-
-</div>

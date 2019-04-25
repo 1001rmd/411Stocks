@@ -5,20 +5,7 @@
 
 @(boards : Seq[Leaderboard], form: Form[BoardRequest])(implicit request: Request, messages: play.i18n.Messages)
 
-<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/materialize.css")">
-<link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-
-<div class="container">
-<nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container">
-        <a class="brand-logo">411 Stocks</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="@routes.HomeController.index"> Home </a></li>
-        </ul>
-    </div>
-</nav>
-    <div class ="row">
-<table>
+<a href="@routes.HomeController.index"> Home </a>
 <h1> Join a Leaderboard to get started </h1>
 
 	<table>
@@ -40,7 +27,6 @@
 
 
 <h2>Or Create a New Leaderboard</h2>
-    <div class="col s4">
 @helper.form(action = helper.CSRF(routes.BoardController.addBoard)){
 		@helper.CSRF.formField
 		@helper.inputText(form("name"), '_label -> "Name")
@@ -56,19 +42,6 @@
             </div>
         }
     }
-    </div>
-    <ul class="sidenav sidenav-fixed right-aligned">
+	
 
-        <h3>Links</h3>
-        <li><a href="@routes.UserController.manage"> Manage User </a></li>
-        <li><a href="@routes.PortfolioController.display"> Portfolios </a></li>
-        <li><a href="@routes.BoardController.display"> Leaderboards </a></li>
-        <li><a href="@routes.GuideController.guidePage"> Trading Guide </a></li>
-        <li><a href="@routes.NewsController.newsPage"> Stock News </a></li>
-        <li><a href="@routes.LoginController.logout"> Logout </a></li>
-    </ul>
-</table>
-    </div>
 
-</table>
-</div>
