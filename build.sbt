@@ -29,6 +29,10 @@ libraryDependencies += "org.json" % "json" % "20180813"
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.7.2"
 libraryDependencies += "com.google.code.gson" % "gson" % "2.2.4"
 
+libraryDependencies += "org.dmfs" % "httpurlconnection-executor" % "0.8"
+
+libraryDependencies += "com.googlecode.json-simple" % "json-simple" % "1.1"
+
 //WS for API calls
 libraryDependencies += ws
 
