@@ -139,6 +139,7 @@ public class StockController extends Controller{
 					found = true;
 					s.quantity += stock.quantity;
 					s.save();
+					break;
 				}
 				
 			}
@@ -194,6 +195,10 @@ public class StockController extends Controller{
 					s.save();
 					portfolio.getValue(data);
 					portfolio.save();
+					
+					if(s.quantity == 0){
+						s.delete();
+					}
 					
 					//Clears the saved variables for the next transation
 					long id = portfolio.id;

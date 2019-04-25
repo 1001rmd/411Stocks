@@ -13,25 +13,27 @@
         <tbody>
         @for(s <- port.getStock()) {
             
-			@if(s.quantity >= 1){
-				<tr>
-					<td>@s.symbol</td>
-					<td>@s.quantity</td>
-					<td>@s.value</td>
-				</tr>
-			}
+			<tr>
+				<td>@s.symbol</td>
+				<td>@s.quantity</td>
+				<td>@s.value</td>
+			</tr>
         }
         </tbody>
     </table>
 	
 	<br><br><br>
 	
-	@helper.form(action = helper.CSRF(routes.StockController.sellStock)){
-		@helper.CSRF.formField
-		@helper.inputText(form("symbol"), '_label -> "Stock Symbol")
-		@helper.inputText(form("quantity"), '_label -> "Quantity to Sell")
-		
-		<button type="submit">Sell Stock</button>
+	
+	@if(port.stocks.length >= 1 ){
+		<h3>Sell Your Stock</h3>
+		@helper.form(action = helper.CSRF(routes.StockController.sellStock)){
+			@helper.CSRF.formField
+			@helper.inputText(form("symbol"), '_label -> "Stock Symbol")
+			@helper.inputText(form("quantity"), '_label -> "Quantity to Sell")
+			
+			<button type="submit">Sell Stock</button>
+		}
 	}
 	
 	<br><a href="@routes.StockController.shopStock(port.id, "")"> Buy Stock </a>
