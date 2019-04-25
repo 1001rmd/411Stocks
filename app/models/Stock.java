@@ -28,6 +28,7 @@ public class Stock extends Model{
 	public double getValue(StockDataController api){
 		
 		value = api.getStockValue(symbol) * quantity;
+		this.save();
 		return value;
 		
 	}

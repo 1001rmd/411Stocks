@@ -78,6 +78,7 @@ public class Portfolio extends Model{
 		}
 		
 		value += account; //+ value of unspent money
+		this.save();
 		return value;
 	}
 

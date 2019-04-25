@@ -5,6 +5,7 @@ import models.Stock;
 import models.StockData;
 import models.Portfolio;
 import models.BuyRequest;
+import models.SellRequest;
 
 import io.ebean.Finder;
 import play.data.*;
@@ -34,8 +35,8 @@ import static play.libs.Scala.asScala;
 @Singleton
 public class StockController extends Controller{
 
-    private final Form<BuyRequest> form;
-    //public Form <listStock> forms;
+    private final Form<BuyRequest> buyForm;
+	private final Form<SellRequest> sellForm;
     private MessagesApi messagesApi;
     private ArrayList<StockData> stocks;
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -49,7 +50,8 @@ public class StockController extends Controller{
     @Inject
     public StockController(FormFactory formFactory, MessagesApi messagesApi, StockDataController data){
         
-		this.form = formFactory.form(BuyRequest.class);
+		this.buyForm = formFactory.form(BuyRequest.class);
+		this.sellForm = formFactory.form(SellRequest.class);
         this.messagesApi = messagesApi;
 		this.data = data;
 
@@ -78,25 +80,44 @@ public class StockController extends Controller{
     }
 	
 	
+	public Result displayPortfolio(long id, Request request){
+		
+		try{
+			long sessionUserID = Long.parseLong(request.session().getOptional("userID").get());
+		}catch(Exception e){
+			//This error means the user is not currently logged in
+			//routes the user to login page
+			return redirect(routes.LoginController.display(false));
+		}
+		
+		
+		Portfolio port = new Finder<>(Portfolio.class).byId(id);
+		port.getValue(data);
+		portfolio = port;
+		return ok(views.html.portfolio.render(port, sellForm)); 
+	}
+	
 	public Result shopStock(Long portId, String symbol){
 		
 		
 		Portfolio portfolio = new Finder<>(Portfolio.class).byId(portId);
 		portfolio.getValue(data);
+		portfolio.save();
 		this.portfolio = portfolio;
 		
 		StockData stock = data.getStock(symbol);
 		stockSymbol = symbol;
 		
-		return ok(views.html.buyStock.render(portfolio, stock, form));
+		return ok(views.html.buyStock.render(portfolio, stock, buyForm));
 		
 	}
 
     public Result buyStock(Request request){
-		
-		BuyRequest buyRequest = form.bindFromRequest(request).get();
+
 		
 		try{
+			
+			BuyRequest buyRequest = buyForm.bindFromRequest(request).get();
 		
 			//Gets prospective stock
 			double quantity = Double.parseDouble(buyRequest.quantity);
@@ -133,7 +154,7 @@ public class StockController extends Controller{
 			portfolio = null;
 			stockSymbol = "";
 			
-			return redirect(routes.PortfolioController.displayPortfolio(id));
+			return redirect(routes.StockController.displayPortfolio(id));
 			
 		
 		}catch(Exception e){}
@@ -142,9 +163,52 @@ public class StockController extends Controller{
 		
 	}
 	
-	public Result sellStock(long id, String symbol, double quantity){
+	
+	public Result sellStock(Request request){
 		
-		return ok();
+		
+		try{
+			
+			SellRequest sellRequest = sellForm.bindFromRequest(request).get();
+			
+			//Validates that quatity
+			double quantity = Double.parseDouble(sellRequest.quantity);
+			if(quantity < 1){
+				throw new Exception();
+			}
+			
+			//Check if user owns stock
+			for(Stock s: portfolio.stocks){
+				
+				if(s.symbol.equals(sellRequest.symbol)){
+					if(s.quantity < quantity){
+						throw new Exception();
+					}
+					
+					//Get value of stock
+					double value = data.getStockValue(s.symbol) * quantity;
+					
+					//Subtract Stock quantity and add value to account
+					portfolio.account += value;
+					s.quantity -= quantity;
+					s.save();
+					portfolio.getValue(data);
+					portfolio.save();
+					
+					//Clears the saved variables for the next transation
+					long id = portfolio.id;
+					portfolio = null;
+					stockSymbol = "";
+					
+					return redirect(routes.StockController.displayPortfolio(id));
+				}
+				
+			}
+			
+		
+		}catch(Exception e){}
+		
+		return redirect(routes.StockController.displayPortfolio(portfolio.id));
 	}
 
     
