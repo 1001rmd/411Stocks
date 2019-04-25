@@ -1,0 +1,75 @@
+@import play.mvc.Http.Request
+@import helper._
+@import controllers._
+@import play.data.Form
+@(stocks: Seq[StockNews], form: Form[Stock])(implicit request: Request, messages: play.i18n.Messages)
+
+@main("News") {
+
+    <section id="top">
+        <div class="wrapper">
+            <h1>News</h1>
+        </div>
+    </section>
+
+    <div id="content" class="wrapper doc">
+
+        <table style = "width:100%">
+            <caption><h2>Top Stories</h2></caption><br>
+            <thead>
+                <tr>
+                    <th><h3>Source:</h3></th>
+                    <pre>
+                    <th><h3>Headline:</h3></th>
+                    </pre>
+                    <pre>
+                    <th><h3>Link:</h3></th>
+                    </pre>
+                    <pre>
+                    <th><h3>Summary:</h3></th>
+                    </pre>
+
+
+                </tr>
+            </thead>
+            <tbody>
+            @for(s <- stocks) {
+                <tr>
+                    <td>@s.source</td>
+                    <pre>
+                    <td>@s.headline</td>
+                    </pre>
+                    <pre>
+                    <td><a href="@s.url">Link to Article</a></td>
+                    </pre>
+                    <pre>
+                    <td>@s.summary</td>
+                    </pre>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+        <br><br>
+
+<p>
+       Please go <a href="https://www.google.com/search?q=stocks+news+today&rlz=1C1CHZL_enUS705US705&source=lnms&tbm=nws&sa=X&ved=0ahUKEwjUrrG5ldXhAhUi1lkKHVOXC3kQ_AUIDigB&biw=1920&bih=937">here</a> for more stock news!
+</p>
+
+        <aside>
+            <h3>Links</h3>
+            <ul>
+
+                <li><a href="@routes.LoginController.logout"> Logout </a></li>
+                <li><a href="@routes.UserController.manage"> Manage User </a></li>
+                <li><a href="@routes.PortfolioController.display"> Portfolios </a></li>
+                <li><a href="@routes.BoardController.display"> Leaderboards </a></li>
+                <li><a href="@routes.GuideController.guidePage"> Trading Guide </a></li>
+            </ul>
+        </aside>
+
+}
+
+
+
+
