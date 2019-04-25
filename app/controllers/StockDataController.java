@@ -1,6 +1,7 @@
 package controllers;
 
 import models.StockData;
+import models.StockNews;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
