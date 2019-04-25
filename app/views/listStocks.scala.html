@@ -1,60 +1,62 @@
-@import play.mvc.Http.Request
-@import helper._
-@import controllers._
-@import play.data.Form
-@(stocks: Seq[Stock], form: Form[Stock])(implicit request: Request, messages: play.i18n.Messages)
 
-@main("Stock") {
+@(stocks: Seq[StockData], listName : String)
+
+
+
+
 
     <section id="top">
         <div class="wrapper">
-            <h1>Add Stocks</h1>
+            <h1>Stock List</h1>
         </div>
     </section>
 
 
+
     <div id="content" class="wrapper doc">
-        <article>
+	
+		<a href="@routes.HomeController.index"> Home </a><br><br>
 
-        @helper.form(routes.StockController.addStock) {
-            @helper.CSRF.formField
+		<table style = "width:100%">
+			<caption><h2>Top Stocks: @listName</h2></caption><br>
+			<thead>
+				<tr>
+					<th><h3>Name</h3></th>
+					<th><h3>Symbol</h3></th>
+					<th><h3>Price</h3></th>
+					<th><h3>Percent Change</h3></th>
+				</tr>
+			</thead>
+			<tbody>
+			@for(s <- stocks) {
+				<tr>
+					<td>@s.companyName</td>
+					<td>@s.symbol</td>
+					<td>@s.latestPrice</td>
+					<td>@s.changePercent %</td>
+				</tr>
+			}
+			</tbody>
+		</table>
+		<br><br>
+		
+		<h3>Lists: </h3><br>
+		<a href="@routes.StockController.listStocks("infocus ")"> In Focus </a> &emsp; 
+		<a href="@routes.StockController.listStocks("mostactive ")"> Most Active </a> &emsp;  
+		<a href="@routes.StockController.listStocks("gainers ")"> Gainers </a> &emsp; 
+		<a href="@routes.StockController.listStocks("losers ")"> Losers </a> &emsp; 
+		
+		
+		<br><br>
+		
+		
+	</div>
 
-            @helper.inputText(form("Enter Company Name"))
-
-            @helper.inputText(form("Enter Stock Symbol"))
-
-            <button type="submit">Add Stock</button>
-        }
-        </article>
+        
 
 
-    @request.flash.asScala().data.map { case (name, value) =>
-    <div class="@name">@value</div>
-    }
-
-    <table style = "width:100%">
-        <caption><h2>Your Stocks</h2></caption>
-        <thead>
-            <tr><th><h3>Symbol</h3></th><th><h3>Description</h3></th>
-        </thead>
-        <tbody>
-        @for(s <- stocks) {
-            <tr><td>@s.symbol</td>
-                <td>@s.description</td></tr>
-        }
-        </tbody>
-    </table>
-
-    <hr/>
+ 
+  
 
 
-    @if(form.hasGlobalErrors) {
-        @form.globalErrors.asScala.map { error: play.data.validation.ValidationError =>
-            <div>
-                @error.key: @error.message
-            </div>
-        }
-    }
-
-}
 

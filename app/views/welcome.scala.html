@@ -11,15 +11,30 @@
     <div id="content" class="wrapper doc">
         <article>
 		
-			<h2> Welcome to our App</h2>
+			<h2>Welcome to our App</h2>
 			
 			<p>
                 	<ul>
-                   	<li>
-                        Please go to <a href="@routes.StockController.listStocks">@routes.StockController.listStocks</a> to buy stocks.
-                    	</li>
+                   	    <li>
+                            Get started by joining a <a href="@routes.BoardController.display"> leaderboard </a> or creating your own.
+                        </li>
                 	</ul>
-            		</p>
+					<ul>
+						<li>
+							Then view your <a href="@routes.PortfolioController.display"> portfolio </a> to start buying stocks.
+						</li>
+					</ul>
+					<ul>
+						<li>
+							View top stocks <a href="@routes.StockController.listStocks("infocus ")"> here </a> to scope out your stretegy.
+						</li>
+					</ul>
+                    <ul>
+                        <li>
+                            For help you can look at our <a href="@routes.GuideController.guidePage"> guides</a> on stock trading.
+                        </li>
+                    </ul>
+            </p>
             
         </article>
 
@@ -30,7 +45,9 @@
                 <li><a href="@routes.LoginController.logout"> Logout </a></li>
                 <li><a href="@routes.UserController.manage"> Manage User </a></li>
 				<li><a href="@routes.PortfolioController.display"> Portfolios </a></li>
-				<li><a href="@routes.BoardController.display"> Leaderboards</a></li>
+				<li><a href="@routes.BoardController.display"> Leaderboards </a></li>
+                <li><a href="@routes.GuideController.guidePage"> Trading Guide </a></li>
+                <li><a href="@routes.NewsController.newsPage"> Stock News </a></li>
             </ul>
         </aside>
 

@@ -11,8 +11,19 @@ POST	/login						controllers.LoginController.login(request : Request)
 GET		/logout						controllers.LoginController.logout		
 
 #Stock Functionality
-GET     /stock                      controllers.StockController.listStocks(request: Request)
-POST    /stock                      controllers.StockController.addStock(request: Request)
+GET     /stock/list/      			controllers.StockController.listStocks(request: Request, category = "infocus")
+GET     /stock/list/:category       controllers.StockController.listStocks(request: Request, category : String)
+GET 	/stock/shop/:id/			controllers.StockController.shopStock(id : Long, sym = "")
+GET 	/stock/shop/:id/:sym		controllers.StockController.shopStock(id : Long, sym : String)
+POST 	/stock/buy					controllers.StockController.buyStock(request: Request)
+POST	/stock/sell					controllers.StockController.sellStock(request: Request)
+
+
+#Guide Functionality
+GET     /guide                      controllers.GuideController.guidePage
+
+#News Functionality
+GET     /news                        controllers.NewsController.newsPage(request: Request)
 
 #Users Functionality
 GET		/user						controllers.UserController.display(request : Request)
@@ -34,7 +45,7 @@ POST	/leaderboard/:id			controllers.BoardController.joinBoard(id: Long, request 
 
 #Portfolio Functionality
 GET		/portfolio/user				controllers.PortfolioController.display(request : Request)
-GET		/portfolio/:id				controllers.PortfolioController.displayPortfolio(id : Long, request : Request)
+GET		/portfolio/:id				controllers.StockController.displayPortfolio(id : Long, request : Request)
 
 
 # Map static resources from the /public folder to the /assets URL path

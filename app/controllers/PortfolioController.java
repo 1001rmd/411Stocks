@@ -8,9 +8,6 @@ import play.libs.Json;
 import play.mvc.*;
 import play.mvc.Http.Request;
 import play.*;
-import play.data.Form;
-import play.data.FormFactory;
-import play.i18n.MessagesApi;
 import io.ebean.Finder;
 import io.ebean.Ebean;
 import javax.inject.Inject;
@@ -20,11 +17,12 @@ public class PortfolioController extends Controller{
 
 
 	private Finder<Long, User> userFinder = new Finder<>(User.class);
-	private Finder<Long, Portfolio> portFinder = new Finder<>(Portfolio.class);
 	private long sessionUserID;
 	
 	@Inject
-	public PortfolioController(){}
+	public PortfolioController(){
+
+	}
 	
 	
 	
@@ -45,24 +43,6 @@ public class PortfolioController extends Controller{
 		
 	}
 	
-	
-	
-	
-
-	public Result displayPortfolio(long id, Request request){
-		
-		try{
-			sessionUserID = Long.parseLong(request.session().getOptional("userID").get());
-		}catch(Exception e){
-			//This error means the user is not currently logged in
-			//routes the user to login page
-			return redirect(routes.LoginController.display(false));
-		}
-		
-		
-		Portfolio port = portFinder.byId(id);
-		return ok(portfolio.render(port)); 
-	}
 	
 
 	

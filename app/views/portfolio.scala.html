@@ -1,9 +1,9 @@
-@(port : Portfolio)
+@(port : Portfolio, form : Form[SellRequest])
 
 	<a href="@routes.HomeController.index"> Home </a><br>
 	<a href="@routes.PortfolioController.display"> Back </a><br>
 	
-	<br>Total Value: $@port.getValue
+	<br>Total Value: $@port.value
 	<br>Account Balance: $@port.account<br>
 	<table>
         <caption><h2>@port.leaderboard.name</h2></caption>
@@ -11,12 +11,31 @@
             <tr><th><h3>Stock</h3></th><th><h3>Shares</h3></th><th><h3>Value</h3></th>
         </thead>
         <tbody>
-        @*for(s <- port.getStock()) {
-            <tr>
-				<td> TODO get stock name</td>
-				<td>TODO get stock quantity</td>
-				<td>TODO get stock value</td>
+        @for(s <- port.getStock()) {
+            
+			<tr>
+				<td>@s.symbol</td>
+				<td>@s.quantity</td>
+				<td>@s.value</td>
 			</tr>
-        }*@
+        }
         </tbody>
     </table>
+	
+	<br><br><br>
+	
+	
+	@if(port.stocks.length >= 1 ){
+		<h3>Sell Your Stock</h3>
+		@helper.form(action = helper.CSRF(routes.StockController.sellStock)){
+			@helper.CSRF.formField
+			@helper.inputText(form("symbol"), '_label -> "Stock Symbol")
+			@helper.inputText(form("quantity"), '_label -> "Quantity to Sell")
+			
+			<button type="submit">Sell Stock</button>
+		}
+	}
+	
+	<br><a href="@routes.StockController.shopStock(port.id, "")"> Buy Stock </a>
+	<br><a href="@routes.StockController.listStocks("infocus ")"> View Top Stocks </a>
+	
