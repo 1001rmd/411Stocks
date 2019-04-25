@@ -12,6 +12,9 @@ import play.libs.Json;
 import com.google.gson.Gson;
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.*;
 
 
 
@@ -72,8 +75,20 @@ public class StockDataController extends Controller{
 		}
 	}
 	
-	//TODO add news 
-	public void getStockStories(){}
+	public ArrayList<StockNews> getStockStories(){
+		try{
+			WSRequest request = ws.url("https://api.iextrading.com/1.0/stock/market/news/last/3");
+			WSResponse response = request.get().toCompletableFuture().get();
+
+			Type listType = new TypeToken<ArrayList<StockNews>>(){}.getType();
+
+			return new Gson().fromJson(response.getBody(), listType);
+
+
+		}catch(Exception e){
+			return null;
+		}
+	}
 	
 
 
