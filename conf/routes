@@ -23,7 +23,7 @@ POST	/stock/sell					controllers.StockController.sellStock(request: Request)
 GET     /guide                      controllers.GuideController.guidePage
 
 #News Functionality
-GET     /news                       controllers.NewsController.newsPage
+GET     /news                        controllers.NewsController.newsPage(request: Request)
 
 #Users Functionality
 GET		/user						controllers.UserController.display(request : Request)
